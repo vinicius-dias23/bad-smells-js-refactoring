@@ -1,4 +1,4 @@
-import { ReportGenerator } from '../src/ReportGenerator.js';
+import { ReportGenerator } from '../src/ReportGenerator.refactored.js';
 
 // --- Dados de Teste ---
 const adminUser = { name: 'Admin', role: 'ADMIN' };
@@ -13,7 +13,7 @@ const testItems = [
 // Mock DB (não é usado na lógica atual, mas está lá para o construtor)
 const mockDb = {};
 
-describe('ReportGenerator (Rede de Segurança)', () => {
+describe('ReportGenerator.refactored (Rede de Segurança)', () => {
   let generator;
 
   beforeEach(() => {
@@ -41,12 +41,13 @@ describe('ReportGenerator (Rede de Segurança)', () => {
       const report = generator.generateReport(
         'HTML',
         adminUser,
-        JSON.parse(JSON.stringify(testItems)), 
+        JSON.parse(JSON.stringify(testItems)),
       );
 
       expect(report).toContain('<h1>Relatório</h1>');
       expect(report).toContain('<h2>Usuário: Admin</h2>');
-
+      // Item Padrão
+      expect(report).toContain('<tr><td>1</td><td>Produto A</td><td>300</td></tr>');
       // Item Prioritário (acima de 1000)
       expect(report).toContain(
         '<tr style="font-weight:bold;"><td>3</td><td>Produto C</td><td>1200</td></tr>',
